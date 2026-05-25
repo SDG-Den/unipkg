@@ -2,10 +2,12 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 echo "installing base managers.csv"
+rm -rf ~/.config/unipkg
 mkdir -p ~/.config/unipkg
 cp $SCRIPT_DIR/conf/managers.csv ~/.config/unipkg
 
 echo "installing scripts"
+rm -rf ~/.local/share/unipkg
 mkdir -p ~/.local/share/unipkg
 cp -r $SCRIPT_DIR/scripts/* ~/.local/share/unipkg
 
