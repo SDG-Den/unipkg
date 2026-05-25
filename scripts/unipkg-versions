@@ -1,5 +1,5 @@
-#!/bin/bash
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+#!/bin/sh
+SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 CONF=$(cat ~/.config/unipkg/unipkg.conf)
 MGRS=~/.config/unipkg/managers.csv

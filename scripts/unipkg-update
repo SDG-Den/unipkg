@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+#!/usr/bin/env sh
+SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Universal Linux Package Manager Wrapper (Flavour 1)
 # Usage: ./script.sh <package_manager_index>
 
