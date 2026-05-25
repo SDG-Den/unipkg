@@ -1,6 +1,14 @@
 # unipkg
 universal package managment scripts, cross-distro. 
 
+requirements:
+
+- fzf (TUI only, CLI will work without)
+- bash
+- sudo
+- any package manager
+
+note that unipkg does not come with any built-in package management, it's a wrapper. You will need to install and set up your package manager first.
 
 menus:
 

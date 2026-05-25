@@ -55,7 +55,7 @@ case $COMMAND in
     list)
         case $index in 
             available)
-                sh -c "~/.local/share/unipkg/unipkg-list $index"
+                sh -c "~/.local/share/unipkg/unipkg-list '$index'"
                 ;;
             installed)
                 sh -c "~/.local/share/unipkg/unipkg-list-installed $index"

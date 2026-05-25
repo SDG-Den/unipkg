@@ -59,7 +59,7 @@ Edit unipkg.conf
             ;;
         Install)
             MANSEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse)
-            PKG=$(sh -c "~/.local/share/unipkg/unipkg-list $MANSEL" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
+            PKG=$(sh -c "~/.local/share/unipkg/unipkg-list '$MANSEL'" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
             sh -c "~/.local/share/unipkg/unipkg-install $MANSEL $PKG"
             ;;
         Uninstall)
