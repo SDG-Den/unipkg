@@ -6,7 +6,6 @@ MGRS=~/.config/unipkg/managers.csv
 
 rm ~/.config/unipkg/unipkg.conf
 touch ~/.config/unipkg/unipkg.conf
-clear
 echo "generating new unipkg.conf, please wait..."
 
 while read -r LINE; do

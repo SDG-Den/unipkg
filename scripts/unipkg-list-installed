@@ -5,15 +5,7 @@ SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 
 # --- Dependency Check ---
-if ! command -v fzf &>/dev/null; then
-    echo "Error: 'fzf' is not installed. Install it with your package manager."
-    exit 1
-fi
 
-if ! command -v sudo &>/dev/null; then
-    echo "Error: 'sudo' is not installed. Install it with your package manager."
-    exit 1
-fi
 
 # --- Input Handling ---
 PACKAGE_MANAGER="$1"

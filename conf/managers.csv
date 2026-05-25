@@ -1,27 +1,27 @@
-IndexName,DisplayName,VersionCommand,InfoCommand,InstallCommand,ListCommand,ListUpgradableCommand,UpgradeCommand,RemoveCommand,UpdateCacheCommand,ListInstalledCommand,Attribution
-pacman,PacMan,pacman -V,pacman -Sii,sudo pacman --noconfirm -S ,pacman -Slq,checkupdates,sudo pacman -Syu --noconfirm,sudo pacman -R --noconfirm,sudo pacman -Sy,pacman -Q,SDG-Den [github]
-yay,Arch User Repository (yay),yay -V,yay -Siia,yay --noconfirm -S ,yay -Slqa,yay -Qua,yay -Syu --noconfirm,yay -R --noconfirm,yay -Sy,yay -Q,SDG-Den [github]
-xbps,X Binary Package System,xbps-query --version,xbps-query --RS,sudo xbps-install -S,xbps query -Rs ‘’ | awk ‘{print $2}’ ,Xbps-query -u,sudo xbps-install -Syu,sudo xbps-remove,sudo xbps-install -S,xbps-query -l,SDG-Den [github]
-apk,Alpine Package Keeper,apk --version,apk info -a,sudo apk add --no-cache,apk search -v | cut -d’ ‘ -f1 | cut -d’-’ -f1,apk update; apk list -u,sudo apk upgrade -a --no-interactive,sudo apk del,sudo apk update,apk list --installed,AI
-apt,Advanced Package Tool,apt --version,apt-cache show,sudo apt install -y,apt-cache pkgnames,apt list --upgradable,sudo apt upgrade -y,sudo apt remove,sudo apt update,apt list --installed,AI
-brew,Homebrew,brew --version,brew info,brew install,brew search,brew outdated,brew upgrade,brew uninstall,brew update,brew list,AI
-dnf,Dandified Yum,dnf --version,dnf info,sudo dnf install -y,dnf list available | awk ‘{print $1}’,dnf check-update,sudo dnf upgrade -y,sudo dnf remove,sudo dnf makecache,dnf list installed,AI
-emerge,Portage,emerge --version,eix,sudo emerge -av,eix -I,emerge --pretend --update @world,sudo emerge --update @world,sudo emerge --unmerge,sudo emerge --sync,qlist -I,AI
-equo,Entropy,equo --version,equo match,sudo equo install,equo search ‘’,equo update; equo list --update,sudo equo upgrade,sudo equo remove,sudo equo update,equo list --installed,AI
-flatpak,Flatpak,flatpak --version,flatpak info,flatpak install -y,flatpak remote-ls --columns-application,flatpak list --updates,flatpak update -y,flatpak uninstall,flatpak update,flatpak list,AI
-guix,Guix,guix --version,guix show,guix install,guix package -A ‘’ | awk ‘{print $1}’,guix pull; guix package -u --dry-run,sudo guix package -u,guix remove,guix pull,guix package --list-installed,AI
-nix-env ,Nix ENV,nix-env --version,nix-env -qa --description,nix-env -iA,nix-env -qaP ‘*’,nix-env -u --dry-run,nix-env -u,nix-env -e,nix-channel --update,nix-env -q,AI
-nix-profile,Nix Profile,nix profile --version,nix-env -qa --description,nix profile,nix-env -qaP ‘*’,nix profile upgrade --dry-run,nix profile -u,nix-env -e,nix-channel --update,nix-env -q,AI
-nix-shell,Nix Shell,nix-shell --version,nix-env -qa --description,nix-shell,nix-env -qaP ‘*’,nix-shell -u dry-run,nix-shell -u,nix-env -e,nix-channel --update,nix-env -q,AI
-opkg,OpenWRT Packages,opkg --version,opkg info,opkg install,opkt | cut -d’ ‘ -f1,opkg list-upgradable,sudo opkg upgrade,opkg remove,opkg update,opkg list-installed,AI
-slackpkg,Slackware Packages,slackpkg --version,slackpkg info,sudo slackpkg install,slackpkg list,slackpkg check-updates,sudo slackpkg upgrade-all,sudo slackpkg remove,sudo slackpkg update,slackpkg list-installed,AI
-snap,Snap,snap --version,snap info,sudo snap install,snap find,nap list | grep -E '^[a-zA-Z0-9-]+ +[0-9]+\.[0-9]+\.[0-9]+ +[0-9]+$',snap refresh,sudo snap remove,sudo snap refresh,snap list,AI
-tazpkg,Taz Package Manager,tazpkg --version,tazpkg info,tazpkg get-install,tazpkg list,tazpkg list-upgrades,sudo tazpkg upgrade,sudo tazpkg remove,sudo tazpkg recharge,tazpkg list,AI
-yum,Yellowdog Updater Modified,yum --version,yum info,sudo yum install -y,yum list available | awk ‘{print $1}’,yum check-update,sudo xbps-install -Syu,sudo yum remove,sudo yum makecache,yum list installed,AI
-zypper,Zypper,zypper --version,zypper info,sudo zypper install -y,zypper search --all | awk ‘{print $3}’,zypper list-updates,sudo zypper update -y,sudo zypper remove,sudo zypper refresh,zypper se --installed-only,AI
-conda,Conda (Python),conda --version,conda search -i,,conda search --override-channels -c defaults ‘*’ | awk ‘{print $1}’,conda list --updatable,conda update --all -y,conda remove,conda update --all,conda list,AI
-cargo,Cargo (Rust),cargo --version,cargo info,cargo install,cargo search ‘’ | cut -d’ ‘ -f1,cargo install --list | grep -E '^cargo-(outdated|update)' || echo 'cargo-outdated not installed',,cargo uninstall,cargo install --list,cargo install --list,AI
-composer,Composer (PHP),composer --version,composer show,composer install,composer search ‘’ | awk ‘{print $1}’,composer outdated,composer update,composer remove,composer self-update,composer global show,AI
-gem,Ruby Gems,gem --version,gen info,gem install,gem search -r . --no-versions,gem outdated,gem update,gem uninstall,gem update --system,gem list,AI
-pip,Python-PIP,pip --version,pip show,pip install,pip list,pip list --outdated,pip list --outdated | awk 'NR>2 {print \$1}' | xargs pip install -U,pip uninstall,pip list --outdated,pip list,AI
-pnpm,PNPM (Node.js),pnpm --version,pnpm view,pnpm add,pnpm list,cd ~ && pnpm outdated,pnpm update,pnpm remove -g,pnpm update -g,pnpm list -g,AI
+IndexName,DisplayName,VersionCommand,InfoCommand,InstallCommand,ListCommand,ListUpgradableCommand,UpgradeCommand,RemoveCommand,UpdateCacheCommand,ListInstalledCommand,Attribution,Test Status
+pacman,PacMan,pacman -V,pacman -Sii,sudo pacman --noconfirm -S ,pacman -Slq,checkupdates,sudo pacman -Syu --noconfirm,sudo pacman -R --noconfirm,sudo pacman -Sy,pacman -Q,SDG-Den [github],Tested Working
+yay,Arch User Repository (yay),yay -V,yay -Siia,yay --noconfirm -S ,yay -Slqa,yay -Qua,yay -Syu --noconfirm,yay -R --noconfirm,yay -Sy,yay -Q,SDG-Den [github],Tested Working
+xbps,X Binary Package System,xbps-query --version,xbps-query --RS,sudo xbps-install -S,xbps query -Rs ‘’ | awk ‘{print $2}’ ,Xbps-query -u,sudo xbps-install -Syu,sudo xbps-remove,sudo xbps-install -S,xbps-query -l,SDG-Den [github],Untested
+apk,Alpine Package Keeper,apk --version,apk info -a,sudo apk add --no-cache,apk search -v | cut -d’ ‘ -f1 | cut -d’-’ -f1,apk update; apk list -u,sudo apk upgrade -a --no-interactive,sudo apk del,sudo apk update,apk list --installed,AI,Tested Not Working
+apt,Advanced Package Tool,apt --version,apt-cache show,sudo apt install -y,apt-cache pkgnames,apt list --upgradable,sudo apt upgrade -y,sudo apt remove,sudo apt update,apt list --installed,AI,Untested
+brew,Homebrew,brew --version,brew info,brew install,brew search,brew outdated,brew upgrade,brew uninstall,brew update,brew list,AI,Untested
+dnf,Dandified Yum,dnf --version,dnf info,sudo dnf install -y,dnf list available | awk ‘{print $1}’,dnf check-update,sudo dnf upgrade -y,sudo dnf remove,sudo dnf makecache,dnf list installed,AI,Untested
+emerge,Portage,emerge --version,eix,sudo emerge -av,eix -I,emerge --pretend --update @world,sudo emerge --update @world,sudo emerge --unmerge,sudo emerge --sync,qlist -I,AI,Untested
+equo,Entropy,equo --version,equo match,sudo equo install,equo search ‘’,equo update; equo list --update,sudo equo upgrade,sudo equo remove,sudo equo update,equo list --installed,AI,Untested
+flatpak,Flatpak,flatpak --version,flatpak info,flatpak install -y,flatpak remote-ls --columns-application,flatpak list --updates,flatpak update -y,flatpak uninstall,flatpak update,flatpak list,AI,Untested
+guix,Guix,guix --version,guix show,guix install,guix package -A ‘’ | awk ‘{print $1}’,guix pull; guix package -u --dry-run,sudo guix package -u,guix remove,guix pull,guix package --list-installed,AI,Untested
+nix-env ,Nix ENV,nix-env --version,nix-env -qa --description,nix-env -iA,nix-env -qaP ‘*’,nix-env -u --dry-run,nix-env -u,nix-env -e,nix-channel --update,nix-env -q,AI,Untested
+nix-profile,Nix Profile,nix profile --version,nix-env -qa --description,nix profile,nix-env -qaP ‘*’,nix profile upgrade --dry-run,nix profile -u,nix-env -e,nix-channel --update,nix-env -q,AI,Untested
+nix-shell,Nix Shell,nix-shell --version,nix-env -qa --description,nix-shell,nix-env -qaP ‘*’,nix-shell -u dry-run,nix-shell -u,nix-env -e,nix-channel --update,nix-env -q,AI,Untested
+opkg,OpenWRT Packages,opkg --version,opkg info,opkg install,opkt | cut -d’ ‘ -f1,opkg list-upgradable,sudo opkg upgrade,opkg remove,opkg update,opkg list-installed,AI,Untested
+slackpkg,Slackware Packages,slackpkg --version,slackpkg info,sudo slackpkg install,slackpkg list,slackpkg check-updates,sudo slackpkg upgrade-all,sudo slackpkg remove,sudo slackpkg update,slackpkg list-installed,AI,Untested
+snap,Snap,snap --version,snap info,sudo snap install,snap find,nap list | grep -E '^[a-zA-Z0-9-]+ +[0-9]+\.[0-9]+\.[0-9]+ +[0-9]+$',snap refresh,sudo snap remove,sudo snap refresh,snap list,AI,Untested
+tazpkg,Taz Package Manager,tazpkg --version,tazpkg info,tazpkg get-install,tazpkg list,tazpkg list-upgrades,sudo tazpkg upgrade,sudo tazpkg remove,sudo tazpkg recharge,tazpkg list,AI,Untested
+yum,Yellowdog Updater Modified,yum --version,yum info,sudo yum install -y,yum list available | awk ‘{print $1}’,yum check-update,sudo xbps-install -Syu,sudo yum remove,sudo yum makecache,yum list installed,AI,Untested
+zypper,Zypper,zypper --version,zypper info,sudo zypper install -y,zypper search --all | awk ‘{print $3}’,zypper list-updates,sudo zypper update -y,sudo zypper remove,sudo zypper refresh,zypper se --installed-only,AI,Untested
+conda,Conda (Python),conda --version,conda search -i,,conda search --override-channels -c defaults ‘*’ | awk ‘{print $1}’,conda list --updatable,conda update --all -y,conda remove,conda update --all,conda list,AI,Untested
+cargo,Cargo (Rust),cargo --version,cargo info,cargo install,cargo search ‘’ | cut -d’ ‘ -f1,cargo install --list | grep -E '^cargo-(outdated|update)' || echo 'cargo-outdated not installed',,cargo uninstall,cargo install --list,cargo install --list,AI,Untested
+composer,Composer (PHP),composer --version,composer show,composer install,composer search ‘’ | awk ‘{print $1}’,composer outdated,composer update,composer remove,composer self-update,composer global show,AI,Untested
+gem,Ruby Gems,gem --version,gen info,gem install,gem search -r . --no-versions,gem outdated,gem update,gem uninstall,gem update --system,gem list,AI,Untested
+pip,Python-PIP,pip --version,pip show,pip install,pip list,pip list --outdated,pip list --outdated | awk 'NR>2 {print \$1}' | xargs pip install -U,pip uninstall,pip list --outdated,pip list,AI,Untested
+pnpm,PNPM (Node.js),pnpm --version,pnpm view,pnpm add,pnpm list,cd ~ && pnpm outdated,pnpm update,pnpm remove -g,pnpm update -g,pnpm list -g,AI,Untested

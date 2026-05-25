@@ -44,6 +44,7 @@ Edit unipkg.conf
                     read -n 1 
                     ;;
                 Generate)
+                    clear
                     /bin/sh -c ~/.local/share/unipkg/unipkg-generate
                     echo "press any key to return"
                     read -n 1 
