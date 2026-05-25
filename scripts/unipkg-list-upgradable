@@ -1,0 +1,63 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Universal Linux Package Manager Wrapper (Flavour 1)
+# Usage: ./script.sh <package_manager_index>
+
+# --- Help Section ---
+if [[ $# -eq 0 ]]; then
+    cat <<EOF
+Usage: $0 <package_manager_index>
+
+Arguments:
+  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
+
+Example:
+  $0 apt
+
+Function:
+  lists upgradable packages for that package manager
+
+Special Functionality:
+  using index "any", "all" or "omni" will try to find and install the package using the package managers configured in your unipkg.conf
+EOF
+    exit 1
+fi
+
+# --- Dependency Check ---
+if ! command -v fzf &>/dev/null; then
+    echo "Error: 'fzf' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+if ! command -v sudo &>/dev/null; then
+    echo "Error: 'sudo' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+# --- Input Handling ---
+PACKAGE_MANAGER="$1"
+#echo "Selected package manager: $PACKAGE_MANAGER"
+
+# --- Rest of the script will go here ---
+# (e.g., TUI logic, package operations, etc.)
+
+CONF=$(cat ~/.config/unipkg/unipkg.conf)
+MGRS=~/.config/unipkg/managers.csv
+
+
+case $PACKAGE_MANAGER in
+    omni|any|all)
+      while read -r LINE; do
+      CMD=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f7)
+      DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
+      echo "upgradeable packages for $DisplayName"
+      eval "$CMD"
+      done <<< $CONF
+      ;;
+    *)
+      CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f7)
+      DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+      echo -e "[\e[36mACTION\e[0m] Listing upgradable packages for: \e[33m$DisplayName\e[0m"
+      eval "$CMD"
+      ;;
+esac

@@ -1,0 +1,52 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Universal Linux Package Manager Wrapper (Flavour 2)
+# Usage: ./script.sh <package_manager_index> <package1> <package2> ...
+
+# --- Help Section ---
+if [[ $# -lt 1 ]]; then
+    cat <<EOF
+Usage: $0 <package_manager_index> <package>
+
+Arguments:
+  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
+  <package>  package to get information about
+
+Example:
+  $0 apt curl
+
+Function:
+  gets information about a package
+
+EOF
+    exit 1
+fi
+
+# --- Dependency Check ---
+if ! command -v fzf &>/dev/null; then
+    echo "Error: 'fzf' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+if ! command -v sudo &>/dev/null; then
+    echo "Error: 'sudo' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+# --- Input Handling ---
+PACKAGE_MANAGER="$1"
+shift  # Remove the first argument, leaving only the package list
+PACKAGE_LIST=("$@")
+
+#echo "Selected package manager: $PACKAGE_MANAGER"
+#echo "Packages to process: ${PACKAGE_LIST[*]}"
+
+# --- Rest of the script will go here ---
+# (e.g., TUI logic, package operations, etc.)
+MGRS=~/.config/unipkg/managers.csv
+CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f4)
+DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+echo ""
+echo -e "[\e[36mACTION\e[0m] listing \e[33m$DisplayName\e[0m information for: $PACKAGE_LIST"
+echo ""
+eval "$CMD $PACKAGE_LIST"

@@ -1,0 +1,75 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+EDITOR=micro
+
+
+
+# main-menu
+while $true; do
+    MMOPTS="Maintenance
+Lists
+Install
+Uninstall
+Update"
+    MAINTOPTS="Check
+Indexes
+Versions
+Generate
+Edit unipkg.conf
+"
+
+    CHECKOPTS=$(cat ~/.config/unipkg/managers.csv | sed 1d | cut -d ',' -f1)
+
+
+    
+    MMSEL=$(echo "$MMOPTS" | fzf --prompt="Select an Option" --layout=reverse)
+
+    echo "selected: $MMSEL"
+    case $MMSEL in
+        Maintenance)
+            MAINTSEL=$(echo "$MAINTOPTS" | fzf --prompt="Select an Option" --layout=reverse)
+            case $MAINTSEL in
+                Check)
+                    CHECKSEL=$(echo "$CHECKOPTS" | fzf --prompt="Select an Option" --layout=reverse --preview-window=down:50% --preview="~/.local/share/unipkg/unipkg-check {}")
+                    ;;
+                Indexes)
+                    /bin/sh -c ~/.local/share/unipkg/unipkg-indexes
+                    echo "press any key to return"
+                    read -n 1 
+                    ;;
+                Versions)
+                    /bin/sh -c ~/.local/share/unipkg/unipkg-versions
+                    echo "press any key to return"
+                    read -n 1 
+                    ;;
+                Generate)
+                    /bin/sh -c ~/.local/share/unipkg/unipkg-generate
+                    echo "press any key to return"
+                    read -n 1 
+                    ;;
+                "Edit unipkg.conf")
+                    sudo $EDITOR ~/.config/unipkg/unipkg.conf
+                    ;;
+            esac
+            ;;
+        Lists)
+            LISTSEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-list-installed {1}" --preview-label='alt+i: list installed | alt+u: list upgradable | alt+l: list available' --bind='alt-i:change-preview:~/.local/share/unipkg/unipkg-list-installed {1}' --bind='alt-u:change-preview:~/.local/share/unipkg/unipkg-list-upgradable {1}' --bind='alt-l:change-preview:~/.local/share/unipkg/unipkg-list {1} ') 
+            ;;
+        Install)
+            MANSEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse)
+            PKG=$(bash -c "~/.local/share/unipkg/unipkg-list $MANSEL" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
+            bash -c "~/.local/share/unipkg/unipkg-install $MANSEL $PKG"
+            ;;
+        Uninstall)
+            MANSEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse)
+            PKG=$(bash -c "~/.local/share/unipkg/unipkg-list-installed $MANSEL" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
+            bash -c "~/.local/share/unipkg/unipkg-uninstall $MANSEL $PKG"
+            ;;
+        Update)
+            UPDATESEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-list-upgradable {1}" --preview-label='alt+u: update package cache' --bind='alt-u:execute(~/.local/share/unipkg/unipkg-update {1})' )
+            bash -c "~/.local/share/unipkg/unipkg-upgrade $UPDATESEL"
+            ;;
+    esac
+    sleep 1
+done

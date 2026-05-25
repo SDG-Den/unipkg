@@ -1,0 +1,44 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Universal Linux Package Manager Wrapper (Flavour 1)
+# Usage: ./script.sh <package_manager_index>
+
+# --- Help Section ---
+if [[ $# -eq 0 ]]; then
+    cat <<EOF
+Usage: $0 <package_manager_index>
+
+Arguments:
+  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
+
+Example:
+  $0 apt
+
+Function:
+  Lists available software for that package manager
+EOF
+    exit 1
+fi
+
+# --- Dependency Check ---
+if ! command -v fzf &>/dev/null; then
+    echo "Error: 'fzf' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+if ! command -v sudo &>/dev/null; then
+    echo "Error: 'sudo' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+# --- Input Handling ---
+PACKAGE_MANAGER="$1"
+
+# --- Rest of the script will go here ---
+# (e.g., TUI logic, package operations, etc.)
+
+MGRS=~/.config/unipkg/managers.csv
+CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f6)
+DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+echo -e "[\e[36mACTION\e[0m] Listing available packages for: \e[33m$DisplayName\e[0m"
+eval "$CMD"

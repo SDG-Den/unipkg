@@ -1,0 +1,16 @@
+#!/bin/sh
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+
+CONF=$(cat ~/.config/unipkg/managers.csv | cut -d ',' -f1 | sed 1d )
+MGRS=~/.config/unipkg/managers.csv
+clear
+echo -e "[\e[36mCHECK\e[0m] Listing indexes for available package managers in unipkg:"
+echo ""
+
+while read -r LINE; do
+    index=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f1)
+    DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
+    Attribution=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f12)
+    echo "$index - $DisplayName (provided by: $Attribution)"
+done <<< $CONF

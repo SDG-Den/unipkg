@@ -1,0 +1,40 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Universal Linux Package Manager Wrapper (Flavour 1)
+# Usage: ./script.sh <package_manager_index>
+
+
+# --- Dependency Check ---
+if ! command -v fzf &>/dev/null; then
+    echo "Error: 'fzf' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+if ! command -v sudo &>/dev/null; then
+    echo "Error: 'sudo' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+# --- Input Handling ---
+PACKAGE_MANAGER="$1"
+
+# --- Rest of the script will go here ---
+# (e.g., TUI logic, package operations, etc.)
+MGRS=~/.config/unipkg/managers.csv
+CONF=$(cat ~/.config/unipkg/unipkg.conf)
+
+case $PACKAGE_MANAGER in
+    omni|any|all)
+      while read -r LINE; do
+      CMD=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f11)
+      DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
+      eval "$CMD"
+      done <<< $CONF
+      ;;
+    *)
+      CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f11)
+      DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+      echo -e "[\e[36mACTION\e[0m] Listing installed packages for: \e[33m$DisplayName\e[0m"
+      eval "$CMD"
+      ;;
+esac

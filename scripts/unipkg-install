@@ -1,0 +1,79 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Universal Linux Package Manager Wrapper (Flavour 2)
+# Usage: ./script.sh <package_manager_index> <package1> <package2> ...
+
+# --- Help Section ---
+if [[ $# -lt 1 ]]; then
+    cat <<EOF
+Usage: $0 <package_manager_index> [package1 package2 ...]
+
+Arguments:
+  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
+  [package1 package2 ...]  Space-separated list of packages to install
+
+Example:
+  $0 apt nginx postgresql
+
+Function:
+  Installs software using the provided packagemanager
+
+Special Functionality:
+  using index "any", "all" or "omni" will try to find and install the package using the package managers configured in your unipkg.conf
+
+EOF
+    exit 1
+fi
+
+# --- Dependency Check ---
+if ! command -v fzf &>/dev/null; then
+    echo "Error: 'fzf' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+if ! command -v sudo &>/dev/null; then
+    echo "Error: 'sudo' is not installed. Install it with your package manager."
+    exit 1
+fi
+
+# --- Input Handling ---
+PACKAGE_MANAGER="$1"
+shift  # Remove the first argument, leaving only the package list
+PACKAGE_LIST=("$@")
+
+echo "Selected package manager: $PACKAGE_MANAGER"
+echo "Packages to process: ${PACKAGE_LIST[*]}"
+
+# --- Rest of the script will go here ---
+# (e.g., TUI logic, package operations, etc.)
+MGRS=~/.config/unipkg/managers.csv
+CONF=$(cat ~/.config/unipkg/unipkg.conf)
+
+case $PACKAGE_MANAGER in
+    omni|any|all)
+      while read -r LINE; do
+      INSTALL_CMD=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f5)
+      DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
+      FULL_CMD="$INSTALL_CMD ${PACKAGE_LIST[*]}"
+      echo -e "[\e[36mACTION\e[0m] attempting installation using \e[33m$DisplayName\e[0m"
+      echo "running the following command: $FULL_CMD"
+      if /bin/sh -c "$FULL_CMD" ; then
+        echo -e "[\e[32mSUCCESS\e[0m] successfully installed packages using $DisplayName"
+        exit 0
+      else
+        echo -e "[\e[31mFAIL\e[0m] failed installation using $DisplayName"
+      fi
+      done <<< $CONF
+      echo -e "[\e[31mFAIL\e[0m] Package was not installed."
+      ;;
+    *)
+      CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f5)
+      DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+      echo ""
+      echo -e "[\e[36mACTION\e[0m] using \e[33m$DisplayName\e[0m to install the following software:"
+      echo "${PACKAGE_LIST[*]}"
+      echo ""
+      FULL_CMD="$CMD ${PACKAGE_LIST[*]}"
+      /bin/sh -c "$FULL_CMD"
+    ;;
+esac
