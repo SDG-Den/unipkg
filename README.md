@@ -10,6 +10,8 @@ requirements:
 
 note that unipkg does not come with any built-in package management, it's a wrapper. You will need to install and set up your package manager first.
 
+all scripts *are* set to use whatever you have set to /bin/sh, this will *generally* work fine if /bin/sh is set to bash or zsh, but seems to have problems with *dash* 
+
 menus:
 
 v (per-manager) install menu (list: available packages, display: info, action: install)
