@@ -11,6 +11,22 @@ if ! command -v sudo &>/dev/null; then
     exit 1
 fi
 
+HELPOPTS="help
+check
+indexes
+versions
+generate
+info
+list
+install
+uninstall
+update
+upgrade
+launch-tui
+help-tui
+edit-config
+"
+
 # --- Input Handling ---
 COMMAND="$1"
 index="$2"
@@ -86,6 +102,11 @@ case $COMMAND in
         bash -c "~/.local/share/unipkg/unipkg-tui"
         
         ;;
+    help-tui)
+        # launches a help TUI
+        HELPSEL=$(echo "$HELPOPTS" | fzf --layout=reverse --preview-window=down:70% --preview-label="press enter to output the help for this command to terminal" --preview="~/.local/share/unipkg/unipkg-help {}")
+        bash -c "~/.local/share/unipkg/unipkg-help $HELPSEL"
+        ;;
     edit-config)
         # opens the config in the editor.
         sudo $EDITOR ~/.config/unipkg/unipkg.conf
@@ -111,6 +132,7 @@ case $COMMAND in
         echo "edit-config - opens the unipkg.conf in your terminal text editor (requires \$EDITOR to be set, currently: $EDITOR)"
         echo "generate - generates a unipkg.conf file by checking what package managers are installed. this will overwrite your unipkg.conf"
         echo "launch-tui - opens the TUI for unipkg (requires FZF)" 
+        echo "help-tui - launched a FZF TUI for showing the various commands"
         echo ""
         echo -e "[\e[36mInformation Commands\e[0m]"
         echo "info - gets info from a specific index about a specified package"

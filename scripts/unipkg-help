@@ -3,6 +3,7 @@
 command="$1"
 
 
+
 case $command in
     check)
         echo -e "[\e[36munipkg help\e[0m]"
@@ -82,6 +83,13 @@ case $command in
         echo ""
         echo "launches the interactive FZF-based TUI interface"
         ;;
+    help-tui)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg help-tui"
+        echo ""
+        echo "provides an FZF TUI interface to browse the various unipkg commands"
+        ;;
     uninstall)
         echo -e "[\e[36munipkg help\e[0m]"
         echo ""
@@ -147,6 +155,7 @@ case $command in
         echo "indexes - lists available indexes"
         echo "edit-config - opens the config in your editor (current: $EDITOR)"
         echo "launch-tui - opens the interactive FZF tui"
+        echo "help-tui - opens a FZF tui for browsing the unipkg commands"
         echo "list - lists packages"
         echo "info - gives info on a package"
         echo "install - installs packages"

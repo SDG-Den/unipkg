@@ -9,3 +9,5 @@ add multi-select to install TUI
 
 import/export function?
 
+better handling for sudo?
+

@@ -16,6 +16,22 @@ Indexes
 Versions
 Generate
 Edit unipkg.conf
+Help Menu
+"
+    HELPOPTS="help
+check
+indexes
+versions
+generate
+info
+list
+install
+uninstall
+update
+upgrade
+launch-tui
+help-tui
+edit-config
 "
 
     CHECKOPTS=$(cat ~/.config/unipkg/managers.csv | sed 1d | cut -d ',' -f1)
@@ -47,6 +63,9 @@ Edit unipkg.conf
                     /bin/bash -c ~/.local/share/unipkg/unipkg-generate
                     echo "press any key to return"
                     read -n 1 
+                    ;;
+                "Help Menu")
+                    HELPSEL=$(echo "$HELPOPTS" | fzf --layout=reverse --preview-window=down:70% --preview="~/.local/share/unipkg/unipkg-help {}")
                     ;;
                 "Edit unipkg.conf")
                     sudo $EDITOR ~/.config/unipkg/unipkg.conf
