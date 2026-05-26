@@ -1,9 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
-# Universal Linux Package Manager Wrapper (Flavour 1)
-# Usage: ./script.sh <package_manager_index>
 
-# --- Help Section ---
+# show help if no argument is given
 if [[ $# -eq 0 ]]; then
     cat <<EOF
 Usage: $0 <package_manager_index>
@@ -20,17 +18,14 @@ EOF
     exit 1
 fi
 
-# --- Dependency Check ---
-
-
-# --- Input Handling ---
+# input handling
 PACKAGE_MANAGER="$1"
-
-# --- Rest of the script will go here ---
-# (e.g., TUI logic, package operations, etc.)
-
 MGRS=~/.config/unipkg/managers.csv
+
+# exctract command
 CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f6)
 DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+
+# inform user and run command
 echo -e "[\e[36mACTION\e[0m] Listing available packages for: \e[33m$DisplayName\e[0m"
 eval "$CMD"

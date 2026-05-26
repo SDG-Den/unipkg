@@ -1,10 +1,11 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+
+# set versioning
 export UNIPKG_VERSION="0.1"
 
-#echo "welcome to the unipkg CLI"
-
+# dependency check for sudo
 if ! command -v sudo &>/dev/null; then
     echo "Error: 'sudo' is not installed. Install it with your package manager."
     exit 1
@@ -13,68 +14,84 @@ fi
 # --- Input Handling ---
 COMMAND="$1"
 index="$2"
-shift 2 # Remove the first argument, leaving only the package list
+shift 2 
 PACKAGE_LIST=("$@")
 
-
+# main case 
 case $COMMAND in
     check)
+        # calls the check script on "unipkg check <index>"
         echo -e "[\e[36munipkg\e[0m] running check"
         bash -c "~/.local/share/unipkg/unipkg-check $index"
         ;;
     generate)
+        # calls the generate script on "unipkg generate"
         echo -e "[\e[36munipkg\e[0m] running generate"
         bash -c "~/.local/share/unipkg/unipkg-generate"
         ;;
     indexes)
+        # calls the indexes script on "unipkg indexes"
         echo -e "[\e[36munipkg\e[0m] showing indexes"
         bash -c "~/.local/share/unipkg/unipkg-indexes"
         ;;
-    versions)
+    versions|"--version")
+        # calls the versions script on "unipkg versions" and "unipkg --version"
         echo -e "[\e[36munipkg\e[0m] showing versions"
         bash -c "~/.local/share/unipkg/unipkg-versions"
         ;;
     info)
+        # calls the info script on "unipkg info <index> <package>"
         echo -e "[\e[36munipkg\e[0m] showing info"
         bash -c "~/.local/share/unipkg/unipkg-info $index $PACKAGE_LIST"
         ;;
     install)
+        # calls the install script on "unipkg install <index> <packages>"
         echo -e "[\e[36munipkg\e[0m] installing packages"
         bash -c "~/.local/share/unipkg/unipkg-install $index ${PACKAGE_LIST[*]}"
         ;;
     uninstall)
+        # calls the uninstall script on "unipkg uninstall <index> <package>"
         echo -e "[\e[36munipkg\e[0m] uninstalling packages"
         bash -c "~/.local/share/unipkg/unipkg-uninstall $index ${PACKAGE_LIST[*]}"
         ;;
     update)
+        # calls the update script on "unipkg update <index>"
         echo -e "[\e[36munipkg\e[0m] updating cache"
         bash -c "~/.local/share/unipkg/unipkg-update $index"
         ;;
     upgrade)
+        # calls the upgrade script on "unipkg upgrade <index>"
         echo -e "[\e[36munipkg\e[0m] upgrading system"
         bash -c "~/.local/share/unipkg/unipkg-upgrade $index"
         ;;
     list)
+        # subcase for different list options
         case $index in 
             available)
+                # calls list on "unipkg list available <index>"
                 bash -c "~/.local/share/unipkg/unipkg-list '$index'"
                 ;;
             installed)
+                # calls list-installed on "unipkg list installed <index>"
                 bash -c "~/.local/share/unipkg/unipkg-list-installed $index"
                 ;;
             upgradable)
+                # calls list-upgradable on "unipkg list upgradable <index>"
                 bash -c "~/.local/share/unipkg/unipkg-upgradable $index"
                 ;;
         esac
         ;;
     launch-tui)
+        # launches the TUI
         bash -c "~/.local/share/unipkg/unipkg-tui"
         
         ;;
     edit-config)
+        # opens the config in the editor.
         sudo $EDITOR ~/.config/unipkg/unipkg.conf
         ;;
     *)
+        # shows help
         echo -e "[\e[36munipkg\e[0m] usage:"
         echo ""
         echo "unipkg [COMMAND] <index> <package1> <package2>..."

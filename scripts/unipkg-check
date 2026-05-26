@@ -1,14 +1,14 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
-# Universal Linux Package Manager Wrapper (Flavour 1)
-# Usage: ./script.sh <package_manager_index>
 
+# no args output for help
 if [[ $# -eq 0 ]]; then
     cat <<EOF
-Usage: $0 <package_manager_index>
+Usage: $0 <index>
 
 Arguments:
   <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
+  to find the list of package manager indexes, run 'unipkg indexes'
 
 Example:
   $0 apt
@@ -19,23 +19,17 @@ Function:
 EOF
     exit 1
 fi
-
-# --- Dependency Check ---
-
-
-# --- Input Handling ---
+# input handling
 PACKAGE_MANAGER="$1"
-#echo "Selected package manager: $PACKAGE_MANAGER"
-
-
-# --- Rest of the script will go here ---
-# (e.g., TUI logic, package operations, etc.)
-
 MGRS=~/.config/unipkg/managers.csv
+
+# get data from managers.csv
 CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f3)
 DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
-echo -e "[\e[36mCHECK\e[0m] checking if \e[33m$DisplayName\e[0m is installed..."
 STRIPPED_CMD=$(echo "$CMD" | awk '{print $1}')
+
+# run check
+echo -e "[\e[36mCHECK\e[0m] checking if \e[33m$DisplayName\e[0m is installed..."
 if command -v $STRIPPED_CMD ; then
 echo -e "[\e[32mPASSED\e[0m] $DisplayName is installed"
 exit 0

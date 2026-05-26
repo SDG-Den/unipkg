@@ -1,9 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
-# Universal Linux Package Manager Wrapper (Flavour 2)
-# Usage: ./script.sh <package_manager_index> <package1> <package2> ...
 
-# --- Help Section ---
+# show help if no option was provided
 if [[ $# -lt 1 ]]; then
     cat <<EOF
 Usage: $0 <package_manager_index> [package1 package2 ...]
@@ -22,37 +20,42 @@ EOF
     exit 1
 fi
 
-# --- Dependency Check ---
-
-
-# --- Input Handling ---
+# input handling
 PACKAGE_MANAGER="$1"
-shift  # Remove the first argument, leaving only the package list
+shift
 PACKAGE_LIST=("$@")
+MGRS=~/.config/unipkg/managers.csv
+CONF=$(cat ~/.config/unipkg/unipkg.conf)
 
+# inform user
 echo "Selected package manager: $PACKAGE_MANAGER"
 echo "Package to process: ${PACKAGE_LIST[*]}"
 
-# --- Rest of the script will go here ---
-# (e.g., TUI logic, package operations, etc.)
-MGRS=~/.config/unipkg/managers.csv
-CONF=$(cat ~/.config/unipkg/unipkg.conf)
+
+# handle omni case
 case $PACKAGE_MANAGER in
     omni|any|all)
+      # loop over unipkg.conf items
       while read -r LINE; do
+      # extract info
       INSTALL_CMD=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f9)
       DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
       FULL_CMD="$INSTALL_CMD $PACKAGE_LIST"
+      # inform user
       echo -e "[\e[36mACTION\e[0m] attempting removal using \e[33m$DisplayName\e[0m"
       echo "running the following command: $FULL_CMD"
+      # run the remove command and check its output
       if bash -c "$FULL_CMD" ; then
         echo -e "[\e[32mSUCCESS\e[0m] successfully removed package using $DisplayName"
         exit 0
+        # if succesful, exit the script
       else
         echo -e "[\e[31mFAIL\e[0m] failed removal using $DisplayName"
+        # loop
       fi
       done <<< $CONF
-      echo -e "[\e[31mFAIL\e[0m] Package was not removed."
+      echo -e "[\e[31mFAIL\e[0m] Package $PACKAGE_LIST was not removed."
+      # failed uninstalling the command with the package managers available.
       ;;
     *)
       CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f9)

@@ -1,15 +1,13 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
-# Universal Linux Package Manager Wrapper (Flavour 2)
-# Usage: ./script.sh <package_manager_index> <package1> <package2> ...
 
-# --- Help Section ---
+# present help if no arguments are provided
 if [[ $# -lt 1 ]]; then
     cat <<EOF
-Usage: $0 <package_manager_index> <package>
+Usage: $0 <index> <package>
 
 Arguments:
-  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
+  <index>  The package manager to use (e.g., apt, dnf, pacman)
   <package>  package to get information about
 
 Example:
@@ -22,20 +20,13 @@ EOF
     exit 1
 fi
 
-# --- Dependency Check ---
-
-
-# --- Input Handling ---
+# input handling
 PACKAGE_MANAGER="$1"
-shift  # Remove the first argument, leaving only the package list
+shift 
 PACKAGE_LIST=("$@")
-
-#echo "Selected package manager: $PACKAGE_MANAGER"
-#echo "Packages to process: ${PACKAGE_LIST[*]}"
-
-# --- Rest of the script will go here ---
-# (e.g., TUI logic, package operations, etc.)
 MGRS=~/.config/unipkg/managers.csv
+
+# core function
 CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f4)
 DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
 echo ""

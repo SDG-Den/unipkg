@@ -1,31 +1,48 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
-# Universal Linux Package Manager Wrapper (Flavour 1)
-# Usage: ./script.sh <package_manager_index>
 
+# provide help if no argument was provided
+if [[ $# -eq 0 ]]; then
+    cat <<EOF
+Usage: $0 <index>
 
-# --- Dependency Check ---
+Arguments:
+  <index>  The package manager to use (e.g., apt, dnf, pacman)
 
+Example:
+  $0 apt
 
-# --- Input Handling ---
+Function:
+  Lists installed software for that package manager
+
+Special Functionality:
+  using index "any", "all" or "omni" will list installed packages for all package managers
+EOF
+    exit 1
+fi
+
+# input handling
 PACKAGE_MANAGER="$1"
-
-# --- Rest of the script will go here ---
-# (e.g., TUI logic, package operations, etc.)
 MGRS=~/.config/unipkg/managers.csv
 CONF=$(cat ~/.config/unipkg/unipkg.conf)
 
+# handle omni case
 case $PACKAGE_MANAGER in
     omni|any|all)
+      # loop over unipkg.conf lines
       while read -r LINE; do
+      # extract command
       CMD=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f11)
       DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
+      # run command
       eval "$CMD"
       done <<< $CONF
       ;;
     *)
+      # extract command
       CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f11)
       DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+      # run command
       echo -e "[\e[36mACTION\e[0m] Listing installed packages for: \e[33m$DisplayName\e[0m"
       eval "$CMD"
       ;;
