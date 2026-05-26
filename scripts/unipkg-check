@@ -35,7 +35,7 @@ MGRS=~/.config/unipkg/managers.csv
 CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f3)
 DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
 echo -e "[\e[36mCHECK\e[0m] checking if \e[33m$DisplayName\e[0m is installed..."
-STRIPPED_CMD=(echo "$CMD" | awk '{print $1}')
+STRIPPED_CMD=$(echo "$CMD" | awk '{print $1}')
 if command -v $STRIPPED_CMD ; then
 echo -e "[\e[32mPASSED\e[0m] $DisplayName is installed"
 exit 0
