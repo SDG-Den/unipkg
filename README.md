@@ -1,35 +1,14 @@
 # unipkg
 universal package managment scripts, cross-distro. 
 
-requirements:
+dependencies:
 
 - fzf (TUI only, CLI will work without)
 - bash
 - sudo
 - any package manager
 
-note that unipkg does not come with any built-in package management, it's a wrapper. You will need to install and set up your package manager first.
-
-all scripts *are* set to use whatever you have set to /bin/sh, this will *generally* work fine if /bin/sh is set to bash or zsh, but seems to have problems with *dash* 
-
-menus:
-
-v (per-manager) install menu (list: available packages, display: info, action: install)
-
-v (universal) info menu (list: various commands,  action: run that action)
-indexes, versions, check (submenu), generate
-
-v (universal) listing menu (list: unipkg.conf package managers, display: output of commands, action: return, keybind: cycle previews)
-list, list-installed, list-upgradable, 
-
-v (universal) upgrade menu (list: package managers, display: list-upgradable, action: upgrade, keybind: update && refresh preview)
-
-v (per-manager) uninstall menu (list: installed packages, display: info, action: uninstall)
-
-
-
-v top level: select menu (maintenance/info, lists, install, uninstall, update)
-
+note that unipkg does not come with any built-in package management, it's a wrapper. You will need to install and set up your package manager first, then install bash and sudo, then install unipkg. 
 
 command structure:
 

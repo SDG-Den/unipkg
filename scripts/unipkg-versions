@@ -12,3 +12,7 @@ while read -r LINE; do
     echo ""
     eval $CMD
 done <<< $CONF
+echo ""
+echo -e "[\e[36mACTION\e[0m] Versioning for: \e[33munipkg\e[0m"
+echo "unipkg version: $UNIPKG_VERSION"
+echo ""

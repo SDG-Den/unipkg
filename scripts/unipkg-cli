@@ -1,6 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+export UNIPKG_VERSION="0.1"
+
 #echo "welcome to the unipkg CLI"
 
 if ! command -v sudo &>/dev/null; then
