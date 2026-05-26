@@ -1,0 +1,160 @@
+#!/bin/bash
+
+command="$1"
+
+
+case $command in
+    check)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg check <index>"
+        echo ""
+        echo "example: unipkg check apt - checks if apt is available"
+        echo ""
+        echo "checks whether the package manager is available or not and lists the location of the binary"
+        echo "note: this command *will* detect a package manager as installed if a symlink with the same command name exists"
+        echo "this leads to for example yum being detected on modern fedora, as they symlink /usr/bin/yum to /usr/bin/dnf5"
+        ;;
+    generate)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg generate"
+        echo ""
+        echo "re-generates your unipkg.conf file (located at ~/.config/unipkg/unipkg.conf) by automatically detecting installed package managers"
+        echo ""
+        echo "it is recommended to double-check unipkg.conf after running this command ([nano/micro/vim/nvim] ~/.config/unipkg/unipkg.conf)"
+        echo ""
+        echo "unipkg will use the package managers configured in this file in the order they are listed. put your primary package manager at the top."
+        ;;
+    indexes)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg indexes"
+        echo ""
+        echo "list all available indexes, their user friendly name and the source for their commands."
+        ;;
+    info)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg info <index> <package>"
+        echo ""
+        echo "example: unipkg info pacman sl - lists info about the package \"sl\" from the pacman repositories"
+        echo ""
+        echo "lists details for a package in a specific package manager."
+        ;;
+    install)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg install <index> <package> [package2].."
+        echo ""
+        echo "example: unipkg install xbps networkmanager - installs networkmanager using xbps package manager"
+        echo ""
+        echo "installs packages using the provided package manager. accepts a space-separated list of packages"
+        echo ""
+        echo "unipkg install also accepts the indexes \"omni\", \"any\" and \"all\". "
+        echo "which will run through the package managers in your unipkg.conf and attempt to install the requested packages with each one"
+        echo "until it succeeds or runs out of package managers to try."
+        ;;
+    list)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg list <subcommand> <index>"
+        echo ""
+        echo "example: unipkg list upgradable yay - lists all packages installed that have updates available in the yay package manager"
+        echo ""
+        echo "provides various lists of packages for a specified index."
+        echo ""
+        echo "subcommands:"
+        echo ""
+        echo "available - lists available packages in the remote repository"
+        echo ""
+        echo "installed - lists installed packages"
+        echo ""
+        echo "upgradable - lists packages with updates available"
+        echo ""
+        echo "unipkg list also accepts the indexes \"omni\", \"any\" and \"all\" for the installed and upgradable subcommands."
+        echo "which will run through the package managers in your unipkg.conf and provide the list for each one"
+        ;;
+    launch-tui)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg launch-tui"
+        echo ""
+        echo "launches the interactive FZF-based TUI interface"
+        ;;
+    uninstall)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg uninstall <index> <package>"
+        echo ""
+        echo "example: unipkg uninstall dnf cowsay - uninstalls dnf with cowsay"
+        echo ""
+        echo "uninstalls the package with the provided package manager"
+        echo ""
+        echo "unipkg uninstall also accepts the indexes \"omni\", \"any\" and \"all\". "
+        echo "which will run through the package managers in your unipkg.conf and attempt to uninstall the requested package with each one"
+        echo "until it succeeds or runs out of package managers to try."
+        ;;
+    update)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg update <index>"
+        echo ""
+        echo "example: unipkg update apt - updates the apt cache"
+        echo ""
+        echo "updates the local cache for package managers that require this, will do nothing for package managers that do not need to update a local cache."
+        echo ""
+        echo "unipkg update also accepts the indexes \"omni\", \"any\" and \"all\"."
+        echo "which will run through the package managers in your unipkg.conf and run a cache update for each one"
+        ;;
+    upgrade)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg upgrade <index>"
+        echo ""
+        echo "example: unipkg upgrade zypper"
+        echo ""
+        echo "runs the \"update all packages\" command for the provided package manager"
+        echo ""
+        echo "unipkg upgrade also accepts the indexes \"omni\", \"any\" and \"all\"."
+        echo "which will run through the package managers in your unipkg.conf and run a full upgrade for each one"
+        ;;
+    versions)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg versions"
+        echo ""
+        echo "will provide the versions for all enabled package managers as well as unipkg itself."
+        ;;
+    edit-config)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "usage: unipkg edit-config"
+        echo ""
+        echo "opens unipkg.conf in your terminal text editor."
+        echo ""
+        echo "this needs you to have your EDITOR variable set in your shell."
+        echo "currently, your editor is set to: $EDITOR"
+        ;;
+    *)
+        echo -e "[\e[36munipkg help\e[0m]"
+        echo ""
+        echo "available commands:"
+        echo ""
+        echo "check - checks if a package manager is available"
+        echo "generate - generates unipkg.conf"
+        echo "help - provides information about unipkg commands"
+        echo "indexes - lists available indexes"
+        echo "edit-config - opens the config in your editor (current: $EDITOR)"
+        echo "launch-tui - opens the interactive FZF tui"
+        echo "list - lists packages"
+        echo "info - gives info on a package"
+        echo "install - installs packages"
+        echo "uninstall - uninstalls packages"
+        echo "update - updates caches"
+        echo "upgrade - upgrades packages"
+        echo "versions - lists version of unipkg and activated package managers"
+        echo ""
+        echo "run \"unipkg help <command> for more information about that command\" "
+        ;;
+esac

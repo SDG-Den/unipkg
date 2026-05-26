@@ -1,17 +1,26 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+# input handling
 CONF=$(cat ~/.config/unipkg/unipkg.conf)
 MGRS=~/.config/unipkg/managers.csv
+
+# clear screen
 clear
+
+# loop through unipkg.conf
 while read -r LINE; do
+    # extract info
     CMD=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f3)
     DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
     echo ""
+    # inform user
     echo -e "[\e[36mACTION\e[0m] Versioning for: \e[33m$DisplayName\e[0m"
     echo ""
+    # run command
     eval $CMD
 done <<< $CONF
+# add unipkg version
 echo ""
 echo -e "[\e[36mACTION\e[0m] Versioning for: \e[33munipkg\e[0m"
 echo "unipkg version: $UNIPKG_VERSION"

@@ -90,8 +90,15 @@ case $COMMAND in
         # opens the config in the editor.
         sudo $EDITOR ~/.config/unipkg/unipkg.conf
         ;;
+    help)
+        bash -c "~/.local/share/unipkg/unipkg-help $index"
+        ;;
     *)
         # shows help
+        echo -e "[\e[36munipkg\e[0m] Welcome to unipkg"
+        echo ""
+        echo "installed version: $UNIPKG_VERSION"
+        echo ""
         echo -e "[\e[36munipkg\e[0m] usage:"
         echo ""
         echo "unipkg [COMMAND] <index> <package1> <package2>..."

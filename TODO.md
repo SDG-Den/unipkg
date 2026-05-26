@@ -8,3 +8,7 @@ add multi-select to install TUI
 add proper help to every function
 clean up scripts
 create a full "help" command
+
+
+import/export function?
+

@@ -4,17 +4,13 @@ SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 # no args output for help
 if [[ $# -eq 0 ]]; then
     cat <<EOF
-Usage: $0 <index>
+usage: unipkg check <index>
 
-Arguments:
-  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
-  to find the list of package manager indexes, run 'unipkg indexes'
+example: unipkg check apt - checks if apt is available
 
-Example:
-  $0 apt
-
-Function:
-  checks if this package manager is currently available on the system
+checks whether the package manager is available or not and lists the location of the binary
+note: this command *will* detect a package manager as installed if a symlink with the same command name exists
+this leads to for example yum being detected on modern fedora, as they symlink /usr/bin/yum to /usr/bin/dnf5
 
 EOF
     exit 1

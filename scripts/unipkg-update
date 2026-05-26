@@ -1,54 +1,50 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
-# Universal Linux Package Manager Wrapper (Flavour 1)
-# Usage: ./script.sh <package_manager_index>
 
-# --- Help Section ---
+# provide help if no arguments are provided 
 if [[ $# -eq 0 ]]; then
     cat <<EOF
-Usage: $0 <package_manager_index>
+usage: unipkg update <index>
 
-Arguments:
-  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
+example: unipkg update apt - updates the apt cache
 
-Example:
-  $0 apt
+updates the local cache for package managers that require this, will do nothing for package managers that do not need to update a local cache.
 
-Function:
-  updates the package cache for both the package manager and unipkg.
-
-Special Functionality:
-  using index "any", "all" or "omni" will run the cache update for all package managers.
+unipkg update also accepts the indexes "omni", "any" and "all".
+which will run through the package managers in your unipkg.conf and run a cache update for each one
 EOF
     exit 1
 fi
 
-# --- Dependency Check ---
-
-
-# --- Input Handling ---
+# input handling
 PACKAGE_MANAGER="$1"
-echo "Selected package manager: $PACKAGE_MANAGER"
-
-# --- Rest of the script will go here ---
-# (e.g., TUI logic, package operations, etc.)
-
 MGRS=~/.config/unipkg/managers.csv
 CONF=$(cat ~/.config/unipkg/unipkg.conf)
 
+# inform user
+echo "Selected package manager: $PACKAGE_MANAGER"
+
+# handle omni case
 case $PACKAGE_MANAGER in
     omni|any|all)
+      # loop over unipkg.conf
       while read -r LINE; do
+      # extract info
       CMD=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f10)
       DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
+      # inform user
       echo -e "[\e[36mACTION\e[0m] updating cache for $DisplayName"
+      # run command
       eval "$CMD"
       done <<< $CONF
       ;;
     *)
+      # extract info
       CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f10)
       DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+      # inform user
       echo -e "[\e[36mACTION\e[0m] updating cache for $DisplayName"
+      # run command
       eval "$CMD"
       ;;
 esac

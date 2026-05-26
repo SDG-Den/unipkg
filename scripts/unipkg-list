@@ -4,16 +4,22 @@ SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 # show help if no argument is given
 if [[ $# -eq 0 ]]; then
     cat <<EOF
-Usage: $0 <package_manager_index>
+usage: unipkg list <subcommand> <index>
 
-Arguments:
-  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
+example: unipkg list upgradable yay - lists all packages installed that have updates available in the yay package manager
 
-Example:
-  $0 apt
+provides various lists of packages for a specified index.
 
-Function:
-  Lists available software for that package manager
+subcommands:
+
+available - lists available packages in the remote repository
+
+installed - lists installed packages
+
+upgradable - lists packages with updates available
+
+unipkg list also accepts the indexes "omni", "any" and "all" for the installed and upgradable subcommands.
+which will run through the package managers in your unipkg.conf and provide the list for each one
 EOF
     exit 1
 fi

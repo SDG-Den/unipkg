@@ -1,6 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+
+
 # set variables
 CONF=$(cat ~/.config/unipkg/managers.csv | sed 1d | cut -d ',' -f1)
 MGRS=~/.config/unipkg/managers.csv

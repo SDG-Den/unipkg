@@ -4,17 +4,11 @@ SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 # present help if no arguments are provided
 if [[ $# -lt 1 ]]; then
     cat <<EOF
-Usage: $0 <index> <package>
+usage: unipkg info <index> <package>
 
-Arguments:
-  <index>  The package manager to use (e.g., apt, dnf, pacman)
-  <package>  package to get information about
+example: unipkg info pacman sl - lists info about the package "sl" from the pacman repositories
 
-Example:
-  $0 apt curl
-
-Function:
-  gets information about a package
+lists details for a package in a specific package manager.
 
 EOF
     exit 1

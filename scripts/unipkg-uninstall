@@ -4,17 +4,15 @@ SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 # show help if no option was provided
 if [[ $# -lt 1 ]]; then
     cat <<EOF
-Usage: $0 <package_manager_index> [package1 package2 ...]
+usage: unipkg uninstall <index> <package>
 
-Arguments:
-  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
-  [package1 package2 ...]  Space-separated list of packages to install
+example: unipkg uninstall dnf cowsay - uninstalls dnf with cowsay
 
-Example:
-  $0 apt nginx postgresql
+uninstalls the package with the provided package manager
 
-Function:
-  Uninstalls the provided packages using the provided package manager
+unipkg uninstall also accepts the indexes "omni", "any" and "all".
+which will run through the package managers in your unipkg.conf and attempt to uninstall the requested package with each one
+until it succeeds or runs out of package managers to try.
 
 EOF
     exit 1
@@ -58,13 +56,16 @@ case $PACKAGE_MANAGER in
       # failed uninstalling the command with the package managers available.
       ;;
     *)
+      # extract info
       CMD=$(cat "$MGRS" | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f9)
       DisplayName=$(cat $MGRS | grep -e "^$PACKAGE_MANAGER" | cut -d ',' -f2)
+      FULL_CMD="$CMD $PACKAGE_LIST"
+      # inform user
       echo ""
       echo -e "[\e[36mACTION\e[0m] using \e[33m$DisplayName\e[0m to remove $PACKAGE_LIST"
       echo "${PACKAGE_LIST[*]}"
       echo ""
-      FULL_CMD="$CMD $PACKAGE_LIST"
+      # run command
       bash -c "$FULL_CMD"
     ;;
 esac

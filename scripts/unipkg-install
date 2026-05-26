@@ -4,21 +4,15 @@ SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 # present help if command is run with no arguments
 if [[ $# -lt 1 ]]; then
     cat <<EOF
-Usage: $0 <package_manager_index> [package1 package2 ...]
+usage: unipkg install <index> <package> [package2]..
 
-Arguments:
-  <package_manager_index>  The package manager to use (e.g., apt, dnf, pacman)
-  [package1 package2 ...]  Space-separated list of packages to install
+example: unipkg install xbps networkmanager - installs networkmanager using xbps package manager
 
-Example:
-  $0 apt nginx postgresql
+installs packages using the provided package manager. accepts a space-separated list of packages
 
-Function:
-  Installs software using the provided packagemanager
-
-Special Functionality:
-  using index "any", "all" or "omni" will try to find and install the package using the package managers configured in your unipkg.conf
-
+unipkg install also accepts the indexes "omni", "any" and "all".
+which will run through the package managers in your unipkg.conf and attempt to install the requested packages with each one
+until it succeeds or runs out of package managers to try.
 EOF
     exit 1
 fi
