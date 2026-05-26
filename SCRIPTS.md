@@ -49,6 +49,10 @@ unipkg-upgrade
 usage: `unipkg-upgrade <index>`
 function: runs a full system upgrade for the selected package manager, supports "any/all" keywords
 
+unipkg-help
+usage: `unipkg-help <command>`
+function: provides detailed help for commands in unipkg CLI
+
 
 managers.csv - master list of commands the scripts use as well as manager indexes the script recognizes. 
 

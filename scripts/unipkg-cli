@@ -3,7 +3,7 @@ SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 
 # set versioning
-export UNIPKG_VERSION="0.1"
+export UNIPKG_VERSION="0.2.2"
 
 # dependency check for sudo
 if ! command -v sudo &>/dev/null; then

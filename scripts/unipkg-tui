@@ -77,8 +77,10 @@ edit-config
             ;;
         Install)
             MANSEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse)
-            PKG=$(bash -c "~/.local/share/unipkg/unipkg-list '$MANSEL'" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
-            bash -c "~/.local/share/unipkg/unipkg-install $MANSEL $PKG"
+            PKG=$(bash -c "~/.local/share/unipkg/unipkg-list '$MANSEL'" | sed 1d | fzf --multi --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
+            PKGS=$(echo "$PKG" | tr '\n' ' ')
+            echo "packages: $PKGS"
+            bash -c "~/.local/share/unipkg/unipkg-install $MANSEL $PKGS"
             ;;
         Uninstall)
             MANSEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse)
