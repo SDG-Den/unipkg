@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 EDITOR=micro
@@ -34,18 +34,18 @@ Edit unipkg.conf
                     CHECKSEL=$(echo "$CHECKOPTS" | fzf --prompt="Select an Option" --layout=reverse --preview-window=down:50% --preview="~/.local/share/unipkg/unipkg-check {}")
                     ;;
                 Indexes)
-                    /bin/sh -c ~/.local/share/unipkg/unipkg-indexes
+                    /bin/bash -c ~/.local/share/unipkg/unipkg-indexes
                     echo "press any key to return"
                     read -n 1 
                     ;;
                 Versions)
-                    /bin/sh -c ~/.local/share/unipkg/unipkg-versions
+                    /bin/bash -c ~/.local/share/unipkg/unipkg-versions
                     echo "press any key to return"
                     read -n 1 
                     ;;
                 Generate)
                     clear
-                    /bin/sh -c ~/.local/share/unipkg/unipkg-generate
+                    /bin/bash -c ~/.local/share/unipkg/unipkg-generate
                     echo "press any key to return"
                     read -n 1 
                     ;;
@@ -59,17 +59,17 @@ Edit unipkg.conf
             ;;
         Install)
             MANSEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse)
-            PKG=$(sh -c "~/.local/share/unipkg/unipkg-list '$MANSEL'" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
-            sh -c "~/.local/share/unipkg/unipkg-install $MANSEL $PKG"
+            PKG=$(bash -c "~/.local/share/unipkg/unipkg-list '$MANSEL'" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
+            bash -c "~/.local/share/unipkg/unipkg-install $MANSEL $PKG"
             ;;
         Uninstall)
             MANSEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse)
-            PKG=$(sh -c "~/.local/share/unipkg/unipkg-list-installed $MANSEL" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
-            sh -c "~/.local/share/unipkg/unipkg-uninstall $MANSEL $PKG"
+            PKG=$(bash -c "~/.local/share/unipkg/unipkg-list-installed $MANSEL" | sed 1d | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-info $MANSEL {}")
+            bash -c "~/.local/share/unipkg/unipkg-uninstall $MANSEL $PKG"
             ;;
         Update)
             UPDATESEL=$(cat ~/.config/unipkg/unipkg.conf | fzf --layout=reverse --preview-window=left:50% --preview="~/.local/share/unipkg/unipkg-list-upgradable {1}" --preview-label='alt+u: update package cache' --bind='alt-u:execute(~/.local/share/unipkg/unipkg-update {1})' )
-            sh -c "~/.local/share/unipkg/unipkg-upgrade $UPDATESEL"
+            bash -c "~/.local/share/unipkg/unipkg-upgrade $UPDATESEL"
             ;;
     esac
     sleep 1

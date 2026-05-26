@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 #echo "welcome to the unipkg CLI"
@@ -18,55 +18,55 @@ PACKAGE_LIST=("$@")
 case $COMMAND in
     check)
         echo -e "[\e[36munipkg\e[0m] running check"
-        sh -c "~/.local/share/unipkg/unipkg-check $index"
+        bash -c "~/.local/share/unipkg/unipkg-check $index"
         ;;
     generate)
         echo -e "[\e[36munipkg\e[0m] running generate"
-        sh -c "~/.local/share/unipkg/unipkg-generate"
+        bash -c "~/.local/share/unipkg/unipkg-generate"
         ;;
     indexes)
         echo -e "[\e[36munipkg\e[0m] showing indexes"
-        sh -c "~/.local/share/unipkg/unipkg-indexes"
+        bash -c "~/.local/share/unipkg/unipkg-indexes"
         ;;
     versions)
         echo -e "[\e[36munipkg\e[0m] showing versions"
-        sh -c "~/.local/share/unipkg/unipkg-versions"
+        bash -c "~/.local/share/unipkg/unipkg-versions"
         ;;
     info)
         echo -e "[\e[36munipkg\e[0m] showing info"
-        sh -c "~/.local/share/unipkg/unipkg-info $index $PACKAGE_LIST"
+        bash -c "~/.local/share/unipkg/unipkg-info $index $PACKAGE_LIST"
         ;;
     install)
         echo -e "[\e[36munipkg\e[0m] installing packages"
-        sh -c "~/.local/share/unipkg/unipkg-install $index ${PACKAGE_LIST[*]}"
+        bash -c "~/.local/share/unipkg/unipkg-install $index ${PACKAGE_LIST[*]}"
         ;;
     uninstall)
         echo -e "[\e[36munipkg\e[0m] uninstalling packages"
-        sh -c "~/.local/share/unipkg/unipkg-uninstall $index ${PACKAGE_LIST[*]}"
+        bash -c "~/.local/share/unipkg/unipkg-uninstall $index ${PACKAGE_LIST[*]}"
         ;;
     update)
         echo -e "[\e[36munipkg\e[0m] updating cache"
-        sh -c "~/.local/share/unipkg/unipkg-update $index"
+        bash -c "~/.local/share/unipkg/unipkg-update $index"
         ;;
     upgrade)
         echo -e "[\e[36munipkg\e[0m] upgrading system"
-        sh -c "~/.local/share/unipkg/unipkg-upgrade $index"
+        bash -c "~/.local/share/unipkg/unipkg-upgrade $index"
         ;;
     list)
         case $index in 
             available)
-                sh -c "~/.local/share/unipkg/unipkg-list '$index'"
+                bash -c "~/.local/share/unipkg/unipkg-list '$index'"
                 ;;
             installed)
-                sh -c "~/.local/share/unipkg/unipkg-list-installed $index"
+                bash -c "~/.local/share/unipkg/unipkg-list-installed $index"
                 ;;
             upgradable)
-                sh -c "~/.local/share/unipkg/unipkg-upgradable $index"
+                bash -c "~/.local/share/unipkg/unipkg-upgradable $index"
                 ;;
         esac
         ;;
     launch-tui)
-        sh -c "~/.local/share/unipkg/unipkg-tui"
+        bash -c "~/.local/share/unipkg/unipkg-tui"
         
         ;;
     edit-config)

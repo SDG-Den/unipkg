@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 CONF=$(cat ~/.config/unipkg/managers.csv | sed 1d | cut -d ',' -f1)

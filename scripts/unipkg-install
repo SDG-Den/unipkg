@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Universal Linux Package Manager Wrapper (Flavour 2)
 # Usage: ./script.sh <package_manager_index> <package1> <package2> ...
@@ -49,7 +49,7 @@ case $PACKAGE_MANAGER in
       FULL_CMD="$INSTALL_CMD ${PACKAGE_LIST[*]}"
       echo -e "[\e[36mACTION\e[0m] attempting installation using \e[33m$DisplayName\e[0m"
       echo "running the following command: $FULL_CMD"
-      if /bin/sh -c "$FULL_CMD" ; then
+      if bash -c "$FULL_CMD" ; then
         echo -e "[\e[32mSUCCESS\e[0m] successfully installed packages using $DisplayName"
         exit 0
       else
@@ -66,6 +66,6 @@ case $PACKAGE_MANAGER in
       echo "${PACKAGE_LIST[*]}"
       echo ""
       FULL_CMD="$CMD ${PACKAGE_LIST[*]}"
-      /bin/sh -c "$FULL_CMD"
+      bash -c "$FULL_CMD"
     ;;
 esac

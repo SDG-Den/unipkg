@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Universal Linux Package Manager Wrapper (Flavour 2)
 # Usage: ./script.sh <package_manager_index> <package1> <package2> ...
