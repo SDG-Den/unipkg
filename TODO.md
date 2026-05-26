@@ -3,7 +3,6 @@
 todo:
 
 test more distro's (opensuse, fedora) 
-write documentation/readme
 
 
 

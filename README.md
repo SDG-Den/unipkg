@@ -4,15 +4,17 @@ unipkg is a package manager agnostic wrapper that supports multiple package mana
 
 unipkg comes with both a CLI and TUI, and currently has official tested support for the following package managers:
 
-pacman
-yay
-apt
-snap
-flatpak
-xbps
-brew
+- pacman
+- yay
+- apt
+- snap
+- flatpak
+- xbps
+- brew
 
 due to the way unipkg is set up and configured, unipkg can easily be configured to support *any* commandline based package manager, including custom ones. 
+
+As the project develops, I will test and validate more package managers, and they will be added to the list above as well as included in the base stable config.
 
 ## installation
 
