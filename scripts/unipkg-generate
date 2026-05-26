@@ -12,7 +12,8 @@ while read -r LINE; do
     CMD=$(cat "$MGRS" | grep -e "^$LINE" | cut -d ',' -f3)
     DisplayName=$(cat $MGRS | grep -e "^$LINE" | cut -d ',' -f2)
     echo -e "[\e[36mCHECK\e[0m] Testing availability of \e[33m$DisplayName\e[0m by running the following command: $CMD"
-    if $CMD 2&> /dev/null ; then
+    STRIPPED_CMD=(echo "$CMD" | awk '{print $1}')
+    if command -v $STRIPPED_CMD ; then
         echo -e "[\e[32mPASSED\e[0m] $DisplayName is available"
         echo $LINE >> ~/.config/unipkg/unipkg.conf
     else
