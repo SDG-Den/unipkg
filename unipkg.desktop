@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=0.2.1
+Name=Unipkg
+Type=Application
+Comment=a TUI package manager
+TryExec=/usr/bin/unipkg
+Exec=/usr/bin/unipkg
+Categories=System;
+Keywords=terminal;tty;pty;packages
+Terminal=true
+X-TerminalArgExec=-e
+X-TerminalArgTitle=--title=
+X-TerminalArgAppId=--class=
+X-TerminalArgDir=--working-directory=
+X-TerminalArgHold=--wait-after-command

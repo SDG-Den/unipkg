@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+# present help if command is run with no arguments
+if [[ $# -lt 1 ]]; then
+    cat <<EOF
+usage: unipkg import <directory> 
+
+example: unipkg import ~/myexport - imports the package lists from this directory.
+
+imports all packages in the provided list using your provided package managers. 
+
+the name of each pkglist file will determine the package manager used.
+
+generate these files with unipkg export <
+EOF
+    exit 1
+fi
+
+# input handling
+PACKAGE_MANAGER="$1"
+shift
+PACKAGE_LIST=("$@")
+MGRS=~/.config/unipkg/managers.csv
+CONF=$(cat ~/.config/unipkg/unipkg.conf)
+
+echo "Selected package manager: $PACKAGE_MANAGER"
+echo "Packages to process: ${PACKAGE_LIST[*]}"

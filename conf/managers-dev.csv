@@ -1,4 +1,5 @@
 IndexName,DisplayName,VersionCommand,InfoCommand,InstallCommand,ListCommand,ListUpgradableCommand,UpgradeCommand,RemoveCommand,UpdateCacheCommand,ListInstalledCommand,Attribution,Test Status
+sdgpkg,SDG-OS Packages,sdgpkg version,sdgpkg info,sdgpkg install,sdgpkg fetch,sdgpkg upgradable,sdgpkg upgrade,sdgpkg uninstall,echo "not supported",sdgpkg list,SDG-Den [github], Tested Working
 pacman,PacMan,pacman -V,pacman -Sii,sudo pacman --noconfirm -S ,pacman -Slq,checkupdates,sudo pacman -Syu --noconfirm,sudo pacman -R --noconfirm,sudo pacman -Sy,pacman -Q | awk '{print $1}',SDG-Den [github],Tested Working
 yay,Arch User Repository (yay),yay -V,yay -Siia,yay --noconfirm -S ,yay -Slqa,yay -Qua,yay -Syu --noconfirm,yay -R --noconfirm,yay -Sy,yay -Q,SDG-Den [github],Tested Working
 xbps,X Binary Package System,xbps-query --version,xbps-query -RS,sudo xbps-install -S,xbps-query -Rs '' | awk '{print $2}' ,echo 'xbps cannot show upgradeable packages',sudo xbps-install -Syu,sudo xbps-remove,sudo xbps-install -S,xbps-query -l | awk '{print $2}',SDG-Den [github],Tested Working
