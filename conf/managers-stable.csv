@@ -1,5 +1,4 @@
 IndexName,DisplayName,VersionCommand,InfoCommand,InstallCommand,ListCommand,ListUpgradableCommand,UpgradeCommand,RemoveCommand,UpdateCacheCommand,ListInstalledCommand,Attribution,Test Status
-sdgpkg,SDG-OS Packages,sdgpkg version,sdgpkg info,sdgpkg install,sdgpkg fetch,sdgpkg upgradable,sdgpkg upgrade,sdgpkg uninstall,echo "not supported",sdgpkg list,SDG-Den [github], Tested Working
 pacman,PacMan,pacman -V,pacman -Sii,sudo pacman --noconfirm -S ,pacman -Slq,checkupdates,sudo pacman -Syu --noconfirm,sudo pacman -R --noconfirm,sudo pacman -Sy,pacman -Q,SDG-Den [github],Tested Working
 yay,Arch User Repository (yay),yay -V,yay -Siia,yay --noconfirm -S ,yay -Slqa,yay -Qua,yay -Syu --noconfirm,yay -R --noconfirm,yay -Sy,yay -Q,SDG-Den [github],Tested Working
 xbps,X Binary Package System,xbps-query --version,xbps-query -RS,sudo xbps-install -S,xbps-query -Rs '' | awk '{print $2}' ,echo 'xbps cannot show upgradeable packages',sudo xbps-install -Syu,sudo xbps-remove,sudo xbps-install -S,xbps-query -l | awk '{print $2}',SDG-Den [github],Tested Working
@@ -7,3 +6,4 @@ apt,Advanced Package Tool,apt --version,apt-cache show,sudo apt install -y,apt-c
 brew,Homebrew,brew --version,brew info,brew install,brew formulae,brew outdated,brew upgrade,brew uninstall,brew update,brew list,SDG-Den [github],Tested Working
 flathub,flathub (flatpak),flatpak --version,flatpak remote-info flathub,flatpak install -y,flatpak remote-ls --columns=application --app,flatpak remote-ls --updates --columns=application --app,flatpak update -y,flatpak uninstall,flatpak update,flatpak list --columns=application --app | grep .,SDG-Den [github],Tested Working
 snap,Snap,snap --version,snap info,sudo snap install --classic,cat /var/cache/snapd/names,echo 'cannot display upgradable packages for snap - you'll have to wing it.',snap refresh,sudo snap remove,echo 'snap has no cache update',snap list | sed 1d | cut -d' ' -f1,SDG-Den [github],Tested Working
+sdgpkg,SDG-OS Packages,sdgpkg version,sdgpkg info,sdgpkg install,sdgpkg fetch,sdgpkg upgradable,sdgpkg upgrade,sdgpkg uninstall,echo "not supported",sdgpkg list,SDG-Den [github], Tested Working
