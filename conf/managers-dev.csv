@@ -25,4 +25,4 @@ composer,Composer (PHP),composer --version,composer show,composer install,compos
 gem,Ruby Gems,gem --version,gen info,gem install,gem search -r . --no-versions,gem outdated,gem update,gem uninstall,gem update --system,gem list,AI,Untested
 pip,Python-PIP,pip --version,pip show,pip install,pip list,pip list --outdated,pip list --outdated | awk 'NR>2 {print \$1}' | xargs pip install -U,pip uninstall,pip list --outdated,pip list,AI,Untested
 pnpm,PNPM (Node.js),pnpm --version,pnpm view,pnpm add,pnpm list,cd ~ && pnpm outdated,pnpm update,pnpm remove -g,pnpm update -g,pnpm list -g,AI,Untested
-sdgpkg,SDG-OS Packages,sdgpkg version,sdgpkg info,yes | sdgpkg install,sdgpkg fetch,sdgpkg upgradable,sdgpkg upgrade,yes | sdgpkg uninstall,echo "not supported",sdgpkg list,SDG-Den [github], Tested Working
+sdgpkg,SDG-OS Packages,sdgpkg version,sdgpkg info,yes | sdgpkg install,sdgpkg fetch,sdgpkg upgradable,sdgpkg upgrade,yes | sdgpkg uninstall,echo 'not supported',sdgpkg list,SDG-Den [github], Tested Working
