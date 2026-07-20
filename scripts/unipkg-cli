@@ -111,6 +111,9 @@ case $COMMAND in
         # opens the config in the editor.
         sudo $EDITOR ~/.config/unipkg/unipkg.conf
         ;;
+    list-config)
+    	bash -c "~/.local/share/unipkg/unipkg-listconf $index"
+    	;;
     help)
         bash -c "~/.local/share/unipkg/unipkg-help $index"
         ;;

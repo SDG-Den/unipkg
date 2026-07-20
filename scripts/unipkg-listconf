@@ -1,0 +1,34 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${sh_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+PACKAGEMANAGER="$1"
+MGRS=~/.config/unipkg/managers.csv
+
+case $PACKAGEMANAGER in
+	""|"any"|"all"|"omni")
+	    MANAGERS=$(cat ~/.config/unipkg/unipkg.conf)
+	    echo -e "[\e[36mACTION\e[0m] listing configured package managers"
+	    for MANAGER in $MANAGERS; do
+	    	cat "$MGRS" | grep -e "^$MANAGER" | cut -d ',' -f2
+	    done
+		;;
+	*)
+		LINE=$(cat "$MGRS" | grep -e "^$PACKAGEMANAGER")
+		echo -e "[\e[36mACTION\e[0m] listing command config for: $PACKAGEMANAGER"
+		echo "Display Name: $(echo $LINE | cut -d ',' -f2)"
+		echo "Version Command: $(echo $LINE | cut -d ',' -f3)"
+		echo ""
+		echo "Info Command: $(echo $LINE | cut -d ',' -f4)"
+		echo "List Available Command: $(echo $LINE | cut -d ',' -f6)"
+		echo "List Upgradable Command: $(echo $LINE | cut -d ',' -f7)"
+		echo "List Installed Command: $(echo $LINE | cut -d ',' -f11)"
+		echo ""
+		echo "Install Command: $(echo $LINE | cut -d ',' -f5)"
+		echo "Remove Command: $(echo $LINE | cut -d ',' -f9)"
+		echo ""
+		echo "System Update Command: $(echo $LINE | cut -d ',' -f8)"
+		echo "Update Cache Command: $(echo $LINE | cut -d ',' -f10)"
+		echo ""
+		;;
+esac	
+ 
